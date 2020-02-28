@@ -93,7 +93,7 @@ const ColorList = ({ colors, updateColors }) => {
           </label>
           <div className="button-row">
             <button type="submit">save</button>
-            <button onClick={() => setEditing(false)}>cancel</button>
+            <button type="button" onClick={() => setEditing(false)}>cancel</button>
           </div>
         </form>
       )}
@@ -122,7 +122,7 @@ const ColorList = ({ colors, updateColors }) => {
         </label>
         <div className="button-row">
           <button type="submit">save</button>
-          <button onClick={() => setNewColor(initialColor)}>reset</button>
+          <button type="button" onClick={() => setNewColor(initialColor)}>reset</button>
         </div>
       </form>
       <div className="spacer" />
