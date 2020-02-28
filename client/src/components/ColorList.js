@@ -3,7 +3,7 @@ import axiosWithAuth from "../utils/axiosWithAuth";
 
 const initialColor = {
   color: "",
-  code: { hex: "" }
+  code: { hex: "#000000" }
 };
 
 const ColorList = ({ colors, updateColors }) => {
@@ -20,7 +20,10 @@ const ColorList = ({ colors, updateColors }) => {
   const addNew = e => {
     e.preventDefault();
     axiosWithAuth().post("http://localhost:5000/api/colors", newColor)
-      .then(({data}) => updateColors(data))
+      .then(({data}) => {
+        updateColors(data);
+        setNewColor(initialColor);
+      })
       .catch(e => console.error(e));
   };
 
@@ -28,7 +31,8 @@ const ColorList = ({ colors, updateColors }) => {
     e.preventDefault();
     axiosWithAuth().put(`http://localhost:5000/api/colors/${colorToEdit.id}`, colorToEdit)
       .then(({data: {id}}) => {
-        updateColors(colors => colors.map((color) => color.id === id ? colorToEdit : color))
+        setEditing(false);
+        updateColors(colors => colors.map((color) => color.id === id ? colorToEdit : color));
       })
       .catch(e => console.error(e));
   };
@@ -82,6 +86,7 @@ const ColorList = ({ colors, updateColors }) => {
           <label>
             hex code:
             <input
+              type="color"
               onChange={e =>
                 setColorToEdit({
                   ...colorToEdit,
@@ -111,6 +116,7 @@ const ColorList = ({ colors, updateColors }) => {
         <label>
           hex code:
           <input
+            type="color"
             onChange={e =>
               setNewColor({
                 ...newColor,
